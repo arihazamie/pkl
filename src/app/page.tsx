@@ -22,7 +22,7 @@ export default function Home() {
           </div>
           <div>
             <Link
-              href={"/login"}
+              href="/"
               className="p-3 py-2 rounded-md bg-Button text-ButtonText shadow-md font-bold hover:bg-Button/20 hover:text-Button">
               Login
             </Link>
