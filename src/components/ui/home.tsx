@@ -33,7 +33,7 @@ const HomePage = () => {
           <MenuMobile />
         </div>
       </nav>
-      <div className="md:my-28 my-36">
+      <div className="md:my-28 my-40">
         <div className="font-bold">
           <div className="md:text-9xl text-8xl text-Button">Report</div>
           <div className="flex md:space-x-10 space-x-5 justify-center md:text-2xl text-xl mt-5">
