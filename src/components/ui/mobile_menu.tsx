@@ -43,17 +43,33 @@ const MobileNav = () => {
                 <div>
                   <div className="my-5">
                     <Link
-                      href="/"
+                      href="/login"
                       className="p-3 py-2 shadow-md font-bold bg-ButtonText text-Headline hover:bg-Headline/90 hover:text-Button rounded-xl">
                       Login
                     </Link>
                   </div>
-                  <div className="font-bold">
-                    <Link
-                      href="/"
-                      className="hover:underline">
-                      Financial Report
-                    </Link>
+                  <div className="font-bold grid-cols-1 text-xl space-y-5">
+                    <div>
+                      <Link
+                        href="/pengeluaran"
+                        className="hover:underline">
+                        Expenditure
+                      </Link>
+                    </div>
+                    <div>
+                      <Link
+                        href="/pendapatan"
+                        className="hover:underline">
+                        Income
+                      </Link>
+                    </div>
+                    <div>
+                      <Link
+                        href="/keuangan"
+                        className="hover:underline">
+                        Financial
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
