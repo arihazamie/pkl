@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "../ui/button";
 import { TableReport } from "./table";
 
@@ -21,15 +22,16 @@ const Keuangan = () => {
           <TableReport />
         </div>
         <div className="space-x-5">
-          <Button className="bg-Button text-ButtonText rounded-xl font-bold">
-            Edit
-          </Button>
-          <Button className="bg-Button text-ButtonText rounded-xl font-bold">
-            Save
-          </Button>
-          <Button className="bg-Button text-ButtonText rounded-xl font-bold">
-            Exit
-          </Button>
+          <Link
+            href=""
+            className="p-3 py-2 rounded-xl shadow-md font-bold bg-Button text-ButtonText  hover:bg-Button/20 hover:text-Button">
+            Print
+          </Link>
+          <Link
+            href="/"
+            className="p-3 py-2 rounded-xl shadow-md font-bold bg-Button text-ButtonText  hover:bg-Button/20 hover:text-Button">
+            Home
+          </Link>
         </div>
       </div>
     </div>

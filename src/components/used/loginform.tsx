@@ -25,7 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 const FormSchema = z.object({
-  username: z.string().min(2, {
+  email: z.string().min(2, {
     message: "Username must be at least 5 characters.",
   }),
   password: z.string().min(2, { message: "Password is required" }),
@@ -35,7 +35,7 @@ const LoginForm = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
@@ -60,13 +60,12 @@ const LoginForm = () => {
               className="space-y-6">
               <FormField
                 control={form.control}
-                name="username"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-bold">Username</FormLabel>
+                    <FormLabel className="font-bold">Email</FormLabel>
                     <FormControl>
                       <Input
-                        className="font-bold"
                         placeholder="test@example.com"
                         type="email"
                         {...field}
@@ -84,7 +83,6 @@ const LoginForm = () => {
                     <FormLabel className="font-bold">Password</FormLabel>
                     <FormControl>
                       <Input
-                        className="font-bold"
                         placeholder="*********"
                         type="password"
                         {...field}

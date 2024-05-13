@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -40,8 +41,16 @@ const Pengeluaran = () => {
           />
         </div>
         <div className="space-x-5 text-ButtonText">
-          <Button className="bg-Button rounded-xl font-bold">Save</Button>
-          <Button className="bg-Button rounded-xl font-bold">Exit</Button>
+          <Link
+            href="x"
+            className="p-3 py-2 rounded-xl shadow-md font-bold bg-Button text-ButtonText  hover:bg-Button/20 hover:text-Button">
+            Save
+          </Link>
+          <Link
+            href="/"
+            className="p-3 py-2 rounded-xl shadow-md font-bold bg-Button text-ButtonText  hover:bg-Button/20 hover:text-Button">
+            Home
+          </Link>
         </div>
       </div>
     </div>

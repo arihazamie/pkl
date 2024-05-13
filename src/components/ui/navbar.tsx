@@ -16,14 +16,14 @@ const Navbar = () => {
               Home
             </Link>
             <Link
-              href="/pengeluaran"
-              className="hover:underline">
-              Expenditure
-            </Link>
-            <Link
               href="/pendapatan"
               className="hover:underline">
               Income
+            </Link>
+            <Link
+              href="/pengeluaran"
+              className="hover:underline">
+              Expenditure
             </Link>
             <Link
               href="/keuangan"
@@ -34,7 +34,7 @@ const Navbar = () => {
           <div>
             <Link
               href="/login"
-              className="p-3 py-2 rounded-xl bg-Button text-ButtonText shadow-md font-bold hover:bg-Button/20 hover:text-Button">
+              className="p-3 py-2 rounded-xl shadow-md font-bold bg-Button text-ButtonText  hover:bg-Button/20 hover:text-Button">
               Login
             </Link>
           </div>

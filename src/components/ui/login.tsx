@@ -1,4 +1,4 @@
-const Page = () => {
+git restoreconst Page = () => {
   return (
     <div>
       <div></div>
