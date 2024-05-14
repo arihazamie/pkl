@@ -1,9 +1,8 @@
-import Pengeluaran from "@/components/used/pengeluaran";
-
+import AddIncomeForm from "@/components/used/income";
 const page = () => {
   return (
     <div>
-      <Pengeluaran />
+      <AddIncomeForm />
     </div>
   );
 };

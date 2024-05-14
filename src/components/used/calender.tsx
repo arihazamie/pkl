@@ -20,8 +20,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const DatePicker = () => {
-  const [date, setDate] = React.useState<Date>();
+interface DatePickerProps {
+  date: Date | undefined;
+  onDateChange: (date: Date | undefined) => void;
+}
+
+const DatePicker: React.FC<DatePickerProps> = ({ date, onDateChange }) => {
+  const [dateData, setDateData] = React.useState<Date>();
 
   return (
     <Popover>
@@ -41,7 +46,7 @@ const DatePicker = () => {
         className="flex w-auto flex-col space-y-2 p-2 text-white bg-Background">
         <Select
           onValueChange={(value) =>
-            setDate(addDays(new Date(), parseInt(value)))
+            setDateData(addDays(new Date(), parseInt(value)))
           }>
           <SelectTrigger className="rounded-xl">
             <SelectValue placeholder="Select" />
@@ -59,7 +64,10 @@ const DatePicker = () => {
           <Calendar
             mode="single"
             selected={date}
-            onSelect={setDate}
+            onSelect={(newDate) => {
+              setDateData(newDate);
+              onDateChange(newDate);
+            }}
           />
         </div>
       </PopoverContent>

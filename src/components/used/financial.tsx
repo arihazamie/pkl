@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { TableReport } from "./table";
+import { TableIncome } from "./table_income";
+import { TableExpenditure } from "./table_expenditure";
 
-const Keuangan = () => {
+const FinancialReport = () => {
   return (
-    <div className="bg-Background left-0 right-0 bottom-0 top-24 pt-12 fixed text-Headline">
+    <div className="bg-Background left-0 right-0 bottom-0 top-24 pt-2 fixed text-Headline">
       <div className="grid text-center items-center justify-center space-y-5">
-        <div className="text-3xl font-bold">Financial Report</div>
+        <div className="text-5xl font-bold">Financial Report</div>
         <div className="space-x-5">
           <Button className="bg-Button text-ButtonText rounded-xl font-bold">
             2024
@@ -18,8 +19,9 @@ const Keuangan = () => {
             2026
           </Button>
         </div>
-        <div>
-          <TableReport />
+        <div className="flex gap-20">
+          <TableIncome />
+          <TableExpenditure />
         </div>
         <div className="space-x-5">
           <Link
@@ -38,4 +40,4 @@ const Keuangan = () => {
   );
 };
 
-export default Keuangan;
+export default FinancialReport;

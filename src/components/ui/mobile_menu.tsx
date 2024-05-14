@@ -51,21 +51,21 @@ const MobileNav = () => {
                   <div className="font-bold grid-cols-1 text-xl space-y-5">
                     <div>
                       <Link
-                        href="/pengeluaran"
+                        href="/expenditure"
                         className="hover:underline">
                         Expenditure
                       </Link>
                     </div>
                     <div>
                       <Link
-                        href="/pendapatan"
+                        href="/income"
                         className="hover:underline">
                         Income
                       </Link>
                     </div>
                     <div>
                       <Link
-                        href="/keuangan"
+                        href="/financial"
                         className="hover:underline">
                         Financial
                       </Link>

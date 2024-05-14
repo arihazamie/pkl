@@ -16,17 +16,17 @@ const Navbar = () => {
               Home
             </Link>
             <Link
-              href="/pendapatan"
+              href="/income"
               className="hover:underline">
               Income
             </Link>
             <Link
-              href="/pengeluaran"
+              href="/expenditure"
               className="hover:underline">
               Expenditure
             </Link>
             <Link
-              href="/keuangan"
+              href="/financial"
               className="hover:underline">
               Financial
             </Link>
