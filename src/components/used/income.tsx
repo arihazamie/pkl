@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { z } from "zod";
 import bg from "../../../public/background.webp";
+import Link from "next/link";
 
 const incomeFormSchema = z.object({
   amount: z
@@ -23,6 +24,7 @@ const AddIncomeForm = () => {
   const [date, setDate] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const validateFormData = (formData: {
     amount?: number;
@@ -40,6 +42,7 @@ const AddIncomeForm = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
     const formData = { amount, category, date };
 
     if (!validateFormData(formData)) return;
@@ -50,8 +53,28 @@ const AddIncomeForm = () => {
       setError("");
     } catch (error) {
       setError(`Error creating income record: ${error}`);
+    } finally {
+      setLoading(false);
+      setAmount(0);
+      setCategory("");
+      setDate("");
     }
   };
+
+  const [token, setToken] = useState("");
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    setInterval(() => {
+      const storedToken = localStorage.getItem("token");
+      const storedName = localStorage.getItem("name");
+
+      if (storedToken && storedName) {
+        setToken(storedToken);
+        setName(storedName);
+      }
+    });
+  }, [token, name]);
 
   return (
     <div
@@ -99,11 +122,20 @@ const AddIncomeForm = () => {
           </div>
 
           <div className="mt-2">
-            <button
-              type="submit"
-              className="bg-Button text-ButtonText p-2 mx-10 font-bold rounded-[8px] hover:text-Button hover:bg-Button/30">
-              Add Income
-            </button>
+            {token ? (
+              <button
+                type="submit"
+                className="bg-Button text-ButtonText p-2 mx-10 font-bold rounded-[8px] hover:text-Button hover:bg-Button/30"
+                disabled={loading}>
+                {loading ? "Loading..." : "Add Income"}
+              </button>
+            ) : (
+              <Link
+                href={"/login"}
+                className="bg-Button text-ButtonText p-2 mx-10 font-bold rounded-[8px] hover:text-Button hover:bg-Button/30">
+                Login First
+              </Link>
+            )}
           </div>
 
           {message && <p>{message}</p>}

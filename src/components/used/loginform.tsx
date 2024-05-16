@@ -1,111 +1,91 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import bg from "../../../public/background.webp";
 
-const FormSchema = z.object({
-  email: z.string().min(2, {
-    message: "Username must be at least 5 characters.",
-  }),
-  password: z.string().min(2, { message: "Password is required" }),
-});
-
 const LoginForm = () => {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const router = useRouter();
 
-  const example = () => {
-    console.log();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_FETCH}/login`,
+        {
+          email,
+          password,
+        }
+      );
+
+      const { data } = response;
+      const {
+        owner: { name: userName },
+        token: userToken,
+      } = data;
+
+      localStorage.setItem("token", userToken);
+      localStorage.setItem("name", userName);
+
+      setToken(userToken);
+      setName(userName);
+    } catch (error: any) {
+      setError(error.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogin = () => {
+    router.push("/");
+    router.refresh();
   };
 
   return (
     <div
-      className=" left-0 right-0 bottom-0 top-0 md:pt-40 2xl:pt-56 fixed bg-cover -z-50"
-      style={{ backgroundImage: `url(${bg.src})` }}>
-      <Card className="bg-black/30 text-Headline grid justify-center items-center text-center mx-[30%] shadow-xl rounded-3xl">
-        <CardHeader>
-          <CardTitle className="md:text-4xl 2xl:text-5xl text-Button font-bold">
-            Login Page
-          </CardTitle>
-          <CardDescription>Login with Owner Account</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(example)}
-              className="space-y-6">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-bold">Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        className="rounded-[8px]"
-                        placeholder="test@example.com"
-                        type="email"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-bold">Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        className="rounded-[8px]"
-                        placeholder="*********"
-                        type="password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button
-                type="submit"
-                className="bg-Button rounded-xl text-ButtonText font-bold shadow-xl hover:bg-Button/20 hover:text-Button">
-                Login
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
+      style={{ backgroundImage: `url(${bg.src})` }}
+      className="bg-cover fixed top-0 bottom-0 left-0 right-0 -z-50">
+      <div className="text-center md:mt-40 2xl:mt-48 border-2 rounded-xl p-10 md:mx-96 2xl:mx-[28rem] bg-black/60 text-Button">
+        <h1 className="text-4xl font-bold">Login</h1>
+        <form
+          onSubmit={handleSubmit}
+          className="grid justify-center mt-3 gap-5 text-lg font-bold">
+          <div className="grid justify-center">
+            <label>Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="text-black p-1 rounded-[8px]"
+            />
+          </div>
+          <div className="grid justify-center">
+            <label>Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="text-black p-1 rounded-[8px]"
+            />
+          </div>
+          <button
+            type="submit"
+            onClick={() => handleLogin()}
+            className="bg-Button text-ButtonText mx-16 p-2 font-bold rounded-[8px] hover:text-Button hover:bg-Button/30"
+            disabled={loading}>
+            {loading ? "Loading..." : "Login"}
+          </button>
+        </form>
+        {error && <div style={{ color: "red" }}>{error}</div>}
+      </div>
     </div>
   );
 };

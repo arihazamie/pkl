@@ -9,9 +9,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import fetchData from "@/lib/fetchData";
 
 type DataProps = {
   id: string;
@@ -29,27 +29,24 @@ export const TableIncome = () => {
   );
 
   useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_FETCH}/income`)
-      .then((response) => {
-        setDataIncome(response.data);
-      })
-      .catch((error) => {
-        setError(error);
-      });
+    fetchData({
+      url: "/income",
+      onSuccess: (data) => setDataIncome(data),
+      onError: (error: any) => setError(error),
+    });
   }, []);
 
   return (
-    <Table className="text-Button">
-      <ScrollArea className="h-80">
+    <Table className="text-Button w-full">
+      <ScrollArea className="h-[26rem]">
         <TableHeader className="sticky top-0 bg-ButtonText">
           <TableRow>
-            <TableHead className="w-20 text-center font-bold">#</TableHead>
-            <TableHead className="w-32 text-center font-bold">
+            <TableHead className="w-24 text-center font-bold">#</TableHead>
+            <TableHead className="w-36 text-center font-bold">
               Category
             </TableHead>
             <TableHead className="text-center w-28 font-bold">Date</TableHead>
-            <TableHead className="w-44 text-center font-bold">
+            <TableHead className="w-48 text-center font-bold">
               Nominal
             </TableHead>
           </TableRow>

@@ -1,48 +1,59 @@
-import Link from "next/link";
-import { Button } from "../ui/button";
-import { TableIncome } from "./table_income";
-import { TableExpenditure } from "./table_expenditure";
+"use client";
 import bg from "../../../public/background.webp";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import FinancialReport from "../ui/financialReport";
+import FinancialReportDetail from "../ui/financialReportDetail";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
-const FinancialReport = () => {
+const Financial = () => {
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    setInterval(() => {
+      const storedToken = localStorage.getItem("token");
+
+      if (storedToken) {
+        setToken(storedToken);
+      }
+    });
+  }, [token]);
+
   return (
-    <div
-      style={{ backgroundImage: `url(${bg.src})` }}
-      className="left-0 right-0 bottom-0 top-0 fixed text-Headline -z-50 bg-cover">
-      <div className="grid text-center items-center justify-center md:space-y-3 2xl:space-y-5 md:mt-32 2xl:mt-40">
-        <div className="md:text-4xl 2xl:text-5xl font-bold">
-          Financial Report
+    <div>
+      {token ? (
+        <Tabs
+          defaultValue="1"
+          style={{ backgroundImage: `url(${bg.src})` }}
+          className="text-Button -z-50 top-0 left-0 right-0 bottom-0 bg-cover fixed">
+          <TabsList className="flex mt-36 justify-center">
+            <TabsTrigger value="1">Laporan</TabsTrigger>
+            <TabsTrigger value="2">Detail</TabsTrigger>
+          </TabsList>
+          <div className="flex justify-center">
+            <TabsContent value="1">
+              <FinancialReport />
+            </TabsContent>
+            <TabsContent value="2">
+              <FinancialReportDetail />
+            </TabsContent>
+          </div>
+        </Tabs>
+      ) : (
+        <div
+          style={{ backgroundImage: `url(${bg.src})` }}
+          className="text-Button -z-50 top-0 left-0 right-0 bottom-0 bg-cover fixed">
+          <div className="flex justify-center md:mt-52 2xl:mt-64">
+            <Link
+              href={"/login"}
+              className="bg-Button text-ButtonText md:p-2 2xl:p-4 md:text-base 2xl:text-xl rounded-xl font-bold hover:bg-Button/20 hover:text-Button">
+              Login Fist
+            </Link>
+          </div>
         </div>
-        <div className="space-x-5">
-          <Button className="bg-Button text-ButtonText rounded-xl font-bold">
-            2024
-          </Button>
-          <Button className="bg-Button text-ButtonText rounded-xl font-bold">
-            2025
-          </Button>
-          <Button className="bg-Button text-ButtonText rounded-xl font-bold">
-            2026
-          </Button>
-        </div>
-        <div className="flex gap-20">
-          <TableIncome />
-          <TableExpenditure />
-        </div>
-        <div className="space-x-5">
-          <Link
-            href=""
-            className="p-3 py-2 rounded-xl shadow-md font-bold bg-Button text-ButtonText  hover:bg-Button/20 hover:text-Button">
-            Print
-          </Link>
-          <Link
-            href="/"
-            className="p-3 py-2 rounded-xl shadow-md font-bold bg-Button text-ButtonText  hover:bg-Button/20 hover:text-Button">
-            Home
-          </Link>
-        </div>
-      </div>
+      )}
     </div>
   );
 };
 
-export default FinancialReport;
+export default Financial;
